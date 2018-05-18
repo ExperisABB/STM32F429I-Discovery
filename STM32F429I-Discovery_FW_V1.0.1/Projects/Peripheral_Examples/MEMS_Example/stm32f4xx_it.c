@@ -137,6 +137,9 @@ void PendSV_Handler(void)
 {
 }
 
+// milliseconds timer
+extern unsigned int timer_ms;
+
 /**
   * @brief  This function handles SysTick Handler.
   * @param  None
@@ -145,6 +148,9 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
     TimingDelay_Decrement();
+	
+		// Since function call is 10ms, increment timer accordingly
+		timer_ms += 10;
 }
 
 

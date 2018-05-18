@@ -1,0 +1,6 @@
+
+*.o
+*.d
+*.crf
+STM32F429I-Discovery_FW_V1.0.1/Projects/Peripheral_Examples/MEMS_Example/MDK-ARM/MEMS_Example/MEMS_Example_MEMS_Example.dep
+STM32F429I-Discovery_FW_V1.0.1/Projects/Peripheral_Examples/MEMS_Example/MDK-ARM/MEMS_Example.uvgui.ITMASTU1

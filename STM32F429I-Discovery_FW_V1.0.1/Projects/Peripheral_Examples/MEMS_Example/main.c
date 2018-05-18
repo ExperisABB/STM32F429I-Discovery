@@ -51,6 +51,8 @@ float Gyro[3];
 float X_BiasError, Y_BiasError, Z_BiasError = 0.0;
 uint8_t Xval, Yval = 0x00;
 static __IO uint32_t TimingDelay;
+/* Experis variables */ 
+volatile unsigned int timer_ms = 0;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 static void Demo_MEMS(void);
