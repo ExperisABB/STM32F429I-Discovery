@@ -49,7 +49,7 @@
 float Buffer[6];
 float Gyro[3];
 float X_BiasError, Y_BiasError, Z_BiasError = 0.0;
-uint8_t Xval, Yval = 0x00;
+uint32_t Xval, Yval = 0x00;
 static __IO uint32_t TimingDelay;
 /* Experis variables */ 
 volatile unsigned int timer_ms = 0;
@@ -138,20 +138,20 @@ static void Demo_MEMS(void)
   /* Read Gyro Angular data */
   Demo_GyroReadAngRate(Buffer);
 
-  Buffer[0] = (int8_t)Buffer[0] - (int8_t)Gyro[0];
-  Buffer[1] = (int8_t)Buffer[1] - (int8_t)Gyro[1];
+  Buffer[0] = (int32_t)(Buffer[0] - Gyro[0]);
+  Buffer[1] = (int32_t)(Buffer[1] - Gyro[1]);
 
 	/* Experis diagnostics */
 	x_omega[x_omega_index++] = Buffer[1];
 	x_omega_index = x_omega_index & (OMEGA_BUFFER_SIZE-1);
   
   /* Update autoreload and capture compare registers value*/
-  Xval = ABS((int8_t)(Buffer[0]));
-  Yval = ABS((int8_t)(Buffer[1])); 
+  Xval = ABS((int32_t)(Buffer[0]));
+  Yval = ABS((int32_t)(Buffer[1])); 
   
   if ( Xval>Yval)
   {
-    if ((int16_t)Buffer[0] > 40)
+    if ((int32_t)Buffer[0] > 40)
     {
       /* Clear the LCD */
       LCD_Clear(LCD_COLOR_WHITE);
@@ -160,7 +160,7 @@ static void Demo_MEMS(void)
       LCD_FillTriangle(50, 190, 120, 160, 160, 310);
       //Delay(50);
     }
-    if ((int16_t)Buffer[0] < -40)
+    if ((int32_t)Buffer[0] < -40)
     {
       /* Clear the LCD */
       LCD_Clear(LCD_COLOR_WHITE);
@@ -172,7 +172,7 @@ static void Demo_MEMS(void)
   }
   else
   {
-    if ((int16_t)Buffer[1] < -40)
+    if ((int32_t)Buffer[1] < -40)
     {
       /* Clear the LCD */
       LCD_Clear(LCD_COLOR_WHITE);
@@ -181,7 +181,7 @@ static void Demo_MEMS(void)
       LCD_FillTriangle(120, 120, 5, 60, 260, 160);      
       //Delay(50);
     }
-    if ((int16_t)Buffer[1] > 40)
+    if ((int32_t)Buffer[1] > 40)
     {      
       /* Clear the LCD */ 
       LCD_Clear(LCD_COLOR_WHITE);
