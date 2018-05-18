@@ -1,3 +1,3 @@
 # STM32F429I-Discovery
 STM32F429I Discovery sample projects from ST microelectronics.
-This projects can be the starting point for some educational activities.
+These projects can be the starting point for some educational activities for the *Firmware Design and Development* course held at Kilometro Rosso.
