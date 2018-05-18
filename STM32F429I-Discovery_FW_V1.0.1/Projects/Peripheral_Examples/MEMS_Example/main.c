@@ -53,6 +53,12 @@ uint8_t Xval, Yval = 0x00;
 static __IO uint32_t TimingDelay;
 /* Experis variables */ 
 volatile unsigned int timer_ms = 0;
+
+// Buffer for diagnostics purposes
+#define OMEGA_BUFFER_SIZE  256
+float x_omega[OMEGA_BUFFER_SIZE];
+unsigned int x_omega_index = 0;
+
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 static void Demo_MEMS(void);
@@ -119,6 +125,10 @@ static void Demo_MEMS(void)
 
   Buffer[0] = (int8_t)Buffer[0] - (int8_t)Gyro[0];
   Buffer[1] = (int8_t)Buffer[1] - (int8_t)Gyro[1];
+
+	/* Experis diagnostics */
+	x_omega[x_omega_index++] = Buffer[1];
+	x_omega_index = x_omega_index & (OMEGA_BUFFER_SIZE-1);
   
   /* Update autoreload and capture compare registers value*/
   Xval = ABS((int8_t)(Buffer[0]));
