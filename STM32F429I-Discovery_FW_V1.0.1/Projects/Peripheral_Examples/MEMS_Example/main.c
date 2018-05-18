@@ -56,8 +56,12 @@ volatile unsigned int timer_ms = 0;
 
 // Buffer for diagnostics purposes
 #define OMEGA_BUFFER_SIZE  256
-float x_omega[OMEGA_BUFFER_SIZE];
+
+float x_omega[OMEGA_BUFFER_SIZE];	// float value diagnostics
 unsigned int x_omega_index = 0;
+
+int x_omega_raw[OMEGA_BUFFER_SIZE];	// raw data diagnostics
+unsigned int x_omega_raw_index = 0;	
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -75,6 +79,9 @@ RCC_ClocksTypeDef RCC_Clocks;
   */
 int main(void)
 {
+	/* Experis */ 
+	static unsigned int time = 0;
+
   /*!< At this stage the microcontroller clock setting is already configured, 
   this is done through SystemInit() function which is called from startup
   files (startup_stm32f429_439xx.s) before to branch to application main. 
@@ -108,7 +115,15 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-    Demo_MEMS();
+		/* Experis: only run the code every 10ms */ 
+		if (time != timer_ms)
+		{
+			// Store present time
+			time = timer_ms;
+		
+			// Run demo
+			Demo_MEMS();
+		}
   }
 }
 
@@ -237,7 +252,7 @@ static void Demo_GyroReadAngRate (float* pfData)
       RawData[i]=(int16_t)(((uint16_t)tmpbuffer[2*i] << 8) + tmpbuffer[2*i+1]);
     }
   }
-  
+
   /* Switch the sensitivity value set in the CRTL4 */
   switch(tmpreg & 0x30)
   {
@@ -258,6 +273,11 @@ static void Demo_GyroReadAngRate (float* pfData)
   {
   pfData[i]=(float)RawData[i]/sensitivity;
   }
+	
+	/* Experis diagnostics */
+	x_omega_raw[x_omega_raw_index++] = RawData[1];
+	x_omega_raw_index = x_omega_raw_index & (OMEGA_BUFFER_SIZE-1);
+	
 }
 
 /**
@@ -286,6 +306,10 @@ static void Gyro_SimpleCalibration(float* GyroData)
   GyroData[0] = X_BiasError;
   GyroData[1] = Y_BiasError;
   GyroData[2] = Z_BiasError;
+	
+	/* Experis: init diagnostics counters */ 
+	x_omega_raw_index = 0;
+	x_omega_index = 0;
 }
 
 
