@@ -28,6 +28,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "maze.h"
 
 /** @addtogroup STM32F429I_DISCOVERY_Examples
   * @{
@@ -51,6 +52,7 @@ float Gyro[3];
 float X_BiasError, Y_BiasError, Z_BiasError = 0.0;
 uint32_t Xval, Yval = 0x00;
 static __IO uint32_t TimingDelay;
+
 /* Experis variables */ 
 volatile unsigned int timer_ms = 0;
 
@@ -145,52 +147,9 @@ static void Demo_MEMS(void)
 	x_omega[x_omega_index++] = Buffer[1];
 	x_omega_index = x_omega_index & (OMEGA_BUFFER_SIZE-1);
   
-  /* Update autoreload and capture compare registers value*/
-  Xval = ABS((int32_t)(Buffer[0]));
-  Yval = ABS((int32_t)(Buffer[1])); 
-  
-  if ( Xval>Yval)
-  {
-    if ((int32_t)Buffer[0] > 40)
-    {
-      /* Clear the LCD */
-      LCD_Clear(LCD_COLOR_WHITE);
-      LCD_SetTextColor(LCD_COLOR_MAGENTA);
-      LCD_DrawFullRect(100, 40, 40, 120);
-      LCD_FillTriangle(50, 190, 120, 160, 160, 310);
-      //Delay(50);
-    }
-    if ((int32_t)Buffer[0] < -40)
-    {
-      /* Clear the LCD */
-      LCD_Clear(LCD_COLOR_WHITE);
-      LCD_SetTextColor(LCD_COLOR_RED);
-      LCD_DrawFullRect(100, 160, 40, 120);
-      LCD_FillTriangle(50, 190, 120, 160, 160, 10);
-      //Delay(50);
-    }
-  }
-  else
-  {
-    if ((int32_t)Buffer[1] < -40)
-    {
-      /* Clear the LCD */
-      LCD_Clear(LCD_COLOR_WHITE);
-      LCD_SetTextColor(LCD_COLOR_GREEN);
-      LCD_DrawFullRect(120, 140, 100, 40);
-      LCD_FillTriangle(120, 120, 5, 60, 260, 160);      
-      //Delay(50);
-    }
-    if ((int32_t)Buffer[1] > 40)
-    {      
-      /* Clear the LCD */ 
-      LCD_Clear(LCD_COLOR_WHITE);
-      LCD_SetTextColor(LCD_COLOR_BLUE);
-      LCD_DrawFullRect(20, 140, 100, 40);
-      LCD_FillTriangle(120, 120, 235, 60, 260, 160);
-      //Delay(50);
-    } 
-  } 
+	// Get maze orientation 
+	Maze_GetNewOrientation(Buffer[0], Buffer[1]);
+
 }
 
 /**
