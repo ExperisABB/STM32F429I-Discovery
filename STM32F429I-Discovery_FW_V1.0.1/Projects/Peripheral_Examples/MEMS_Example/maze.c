@@ -40,6 +40,10 @@ Maze maze;
  *                                 Prototypes                               *
  ****************************************************************************/
 
+void LCD_DrawRect(unsigned short Xpos, unsigned short Ypos, unsigned short Height, unsigned short Width);
+void LCD_SetTextColor(unsigned short Color);
+void LCD_DrawLine(unsigned short Xpos, unsigned short Ypos, unsigned short Length, unsigned char Direction);
+
 /****************************************************************************
  *                           Code: private functions
  ****************************************************************************/
@@ -50,18 +54,87 @@ Maze maze;
  *                            Code: public functions
  ****************************************************************************/
 
-// Calculates Maze orientation
+/****************************************************************************
+ * @brief  Draws the maze's outer border 
+ * @retval None
+ ****************************************************************************/
+
+void Maze_DrawBorder(void)
+{
+    /* Draw the border */ 
+    LCD_SetTextColor(LCD_COLOR_BLACK);
+    LCD_DrawRect(MAZE_TOP_X, MAZE_TOP_Y, MAZE_SIZE, MAZE_SIZE);
+    
+} // end Maze_DrawBorder
+
+
+/****************************************************************************
+ * @brief  Draws the board orientatation 
+ * @retval None
+ ****************************************************************************/
+
+void Maze_DrawBoardOrientation(unsigned int orientation, unsigned int oldOrientation)
+{
+    /* Local variables */ 
+    unsigned int _orientation = oldOrientation;
+    
+    /* Init loop variables: 
+    1st time: write a white triangle over the old one
+    2nd time: write a black triangle with the new orientation
+    */
+    
+    /* Set color */
+    LCD_SetTextColor(LCD_COLOR_WHITE);
+    
+    for (int count = 0; count < 2; count++)
+    {
+    
+        /* Adjust drawing */ 
+        switch (_orientation)
+        {
+            case eNONE:
+                break;
+            
+            case eUP: 
+                LCD_FillTriangle(X_MIDDLE-BASE/2, X_MIDDLE+BASE/2, X_MIDDLE, MAZE_TOP_Y+MAZE_SIZE+ARROW_FROM_MAZE, MAZE_TOP_Y+MAZE_SIZE+ARROW_FROM_MAZE, MAZE_TOP_Y+MAZE_SIZE+ARROW_FROM_MAZE+ALTEZZA);
+                break; 
+          
+            case eDOWN:
+                LCD_FillTriangle(X_MIDDLE-BASE/2, X_MIDDLE+BASE/2, X_MIDDLE, MAZE_TOP_Y-ARROW_FROM_MAZE, MAZE_TOP_Y-ARROW_FROM_MAZE, MAZE_TOP_Y-ARROW_FROM_MAZE-ALTEZZA);
+                break; 
+          
+            case eRIGHT:
+                LCD_FillTriangle(MAZE_TOP_X-ARROW_FROM_MAZE, MAZE_TOP_X-ARROW_FROM_MAZE, MAZE_TOP_X-ARROW_FROM_MAZE-ALTEZZA, Y_MIDDLE-BASE/2, Y_MIDDLE+BASE/2, Y_MIDDLE);
+                break; 
+          
+            case eLEFT: 
+                LCD_FillTriangle(MAZE_TOP_X+MAZE_SIZE+ARROW_FROM_MAZE, MAZE_TOP_X+MAZE_SIZE+ARROW_FROM_MAZE, MAZE_TOP_X+MAZE_SIZE+ARROW_FROM_MAZE+ALTEZZA, Y_MIDDLE-BASE/2, Y_MIDDLE+BASE/2, Y_MIDDLE);
+                break;
+          
+            default: 
+                break;
+        }
+    
+        /* Set color and change orientation variable */
+        LCD_SetTextColor(LCD_COLOR_BLACK);
+        _orientation = orientation;
+    } 
+
+} // end Maze_DrawBoardOrientation
+
+/****************************************************************************
+ * @brief  Calculates Maze orientation 
+ * @retval true The board orientation has changed
+ * @retval false No orientation change
+ ****************************************************************************/
+
 bool Maze_GetNewOrientation(float XSpeed, float YSpeed) {
 
 	// Local variables
 	static unsigned int timeout = 0;
-	eOrientation oldOrientation;
 	bool newOrientation = false;
 	float XValue = ABS(XSpeed);
 	float YValue = ABS(YSpeed);
-	
-	// Save present orientation
-	oldOrientation = maze.orientation;
 	
   /* Timeout management */ 
   if (timeout > 0)
@@ -102,7 +175,7 @@ bool Maze_GetNewOrientation(float XSpeed, float YSpeed) {
       }
 
 			// Check for a change in the orientation
-			if (maze.orientation != oldOrientation)
+			if (maze.orientation != maze.oldOrientation)
 			{
 					// Set new orientation
 					newOrientation = true;
@@ -111,7 +184,7 @@ bool Maze_GetNewOrientation(float XSpeed, float YSpeed) {
 					timeout = 400;
 			}		
   }	
-
+	
 	// Return new orientation	detection
 	return newOrientation;
 	

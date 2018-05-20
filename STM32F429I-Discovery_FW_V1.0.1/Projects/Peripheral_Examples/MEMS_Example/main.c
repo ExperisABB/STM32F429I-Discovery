@@ -113,7 +113,10 @@ int main(void)
 
   /* Gyroscope calibration */
   Gyro_SimpleCalibration(Gyro);
-  
+
+  /* Experis: draw maze outer border */
+	Maze_DrawBorder();
+
   /* Infinite loop */
   while (1)
   {
@@ -148,8 +151,14 @@ static void Demo_MEMS(void)
 	x_omega_index = x_omega_index & (OMEGA_BUFFER_SIZE-1);
   
 	// Get maze orientation 
-	Maze_GetNewOrientation(Buffer[0], Buffer[1]);
-
+	if (Maze_GetNewOrientation(Buffer[0], Buffer[1]))
+	{
+			// Draw new orientation
+			Maze_DrawBoardOrientation(maze.orientation, maze.oldOrientation);
+		
+			// Store present orientation
+			maze.oldOrientation = maze.orientation;
+	}
 }
 
 /**
