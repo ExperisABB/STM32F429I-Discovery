@@ -29,6 +29,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "maze.h"
+#include "ball.h"
 
 /** @addtogroup STM32F429I_DISCOVERY_Examples
   * @{
@@ -159,6 +160,13 @@ static void Demo_MEMS(void)
 			// Store present orientation
 			maze.oldOrientation = maze.orientation;
 	}
+
+	/* Adjust ball acceleration, speed and position */ 
+	Ball_Adjust_aVS(maze.orientation);
+
+	/* Draws the ball, and clears the previous one */
+	Maze_DrawTheBall(ball.x_position, ball.y_position );
+	
 }
 
 /**

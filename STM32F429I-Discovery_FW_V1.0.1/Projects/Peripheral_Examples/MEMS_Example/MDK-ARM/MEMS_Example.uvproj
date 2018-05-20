@@ -586,6 +586,11 @@
                 </FileArmAds>
               </FileOption>
             </File>
+            <File>
+              <FileName>ball.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\ball.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

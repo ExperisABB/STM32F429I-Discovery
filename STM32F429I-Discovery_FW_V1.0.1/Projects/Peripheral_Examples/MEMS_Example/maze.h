@@ -48,6 +48,8 @@
 // LCD colors
 #define LCD_COLOR_WHITE 0xFFFF
 #define LCD_COLOR_BLACK 0x0000
+#define LCD_COLOR_RED   0xF800
+#define LCD_COLOR_BLUE2 0x051F
 
 /****************************************************************************
  *                              Global Constants                            *
@@ -85,5 +87,8 @@ void Maze_DrawBorder(void);
 
 // Draws the board orientatation 
 void Maze_DrawBoardOrientation(unsigned int orientation, unsigned int oldOrientation);
-	
+
+// Draws the ball, and clears the previous one
+void Maze_DrawTheBall(unsigned int x, unsigned int y);
+
 #endif      // include me once

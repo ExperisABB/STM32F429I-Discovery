@@ -12,6 +12,7 @@
  ****************************************************************************/
 
 #include "maze.h"
+#include "ball.h"
 
 /****************************************************************************
  *                            Local define section                          *
@@ -43,6 +44,8 @@ Maze maze;
 void LCD_DrawRect(unsigned short Xpos, unsigned short Ypos, unsigned short Height, unsigned short Width);
 void LCD_SetTextColor(unsigned short Color);
 void LCD_DrawLine(unsigned short Xpos, unsigned short Ypos, unsigned short Length, unsigned char Direction);
+void LCD_FillTriangle(unsigned short x1, unsigned short x2, unsigned short x3, unsigned short y1, unsigned short y2, unsigned short y3);
+void LCD_DrawFullCircle(unsigned short Xpos, unsigned short Ypos, unsigned short Radius);
 
 /****************************************************************************
  *                           Code: private functions
@@ -116,7 +119,7 @@ void Maze_DrawBoardOrientation(unsigned int orientation, unsigned int oldOrienta
         }
     
         /* Set color and change orientation variable */
-        LCD_SetTextColor(LCD_COLOR_BLACK);
+        LCD_SetTextColor(LCD_COLOR_BLUE2);
         _orientation = orientation;
     } 
 
@@ -189,3 +192,35 @@ bool Maze_GetNewOrientation(float XSpeed, float YSpeed) {
 	return newOrientation;
 	
 } // Maze_GetNewOrientation
+
+
+/****************************************************************************
+ * @brief  Draws the ball, and clears the previous one
+ * @retval None
+ ****************************************************************************/
+
+void Maze_DrawTheBall(unsigned int x, unsigned int y)
+{
+    /* local variables */ 
+    static unsigned int _x = 0; 
+    static unsigned int _y = 0;
+	  static bool _1stTime = true;
+
+		/* Clear old ball (except on the 1st call) */
+		if (!_1stTime)
+		{
+	  /* Set color to clear */
+    LCD_SetTextColor(LCD_COLOR_WHITE);
+    LCD_DrawFullCircle(_x, _y, BALL_RADIUS);
+		}
+		else _1stTime = false;
+		
+    /* Set color to draw */
+    LCD_SetTextColor(LCD_COLOR_RED);
+    LCD_DrawFullCircle(x, y, BALL_RADIUS);
+    
+    /* Adjust coordinates for next draw operation */ 
+    _x = x; 
+    _y = y;
+    
+} // Maze_DrawTheBall
