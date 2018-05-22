@@ -214,8 +214,8 @@ unsigned int Ball_closeToWall(bool horizontal)
             Xaddress = LCD_SetCursor(ball.x_position + x_offset, ball.y_position + offset);
             
             // Check pixel content
-            if ((*(unsigned short int *)Xaddress != LCD_COLOR_WHITE) || 
-                (fast && (*(unsigned short int *)(Xaddress+2) != LCD_COLOR_WHITE)))
+            if ((*(unsigned short int *)Xaddress == LCD_COLOR_BLACK) || 
+                (fast && (*(unsigned short int *)(Xaddress+2) == LCD_COLOR_BLACK)))
             {
                 // Set close found and quit the loop
                 close = true;
@@ -257,8 +257,8 @@ unsigned int Ball_closeToWall(bool horizontal)
             Xaddress = LCD_SetCursor(ball.x_position + offset, ball.y_position + y_offset);
             
             // Check pixel content
-            if ((*(unsigned short int *)Xaddress != LCD_COLOR_WHITE)  || 
-                (fast && (*(unsigned short int *)(Xaddress+2*X_SIZE) != LCD_COLOR_WHITE)))
+            if ((*(unsigned short int *)Xaddress == LCD_COLOR_BLACK)  || 
+                (fast && (*(unsigned short int *)(Xaddress+2*X_SIZE) == LCD_COLOR_BLACK)))
             {
                 // Set close found
                 close = true;
