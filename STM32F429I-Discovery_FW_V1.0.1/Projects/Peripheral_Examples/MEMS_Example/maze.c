@@ -27,7 +27,7 @@
 #define LCD_DIR_HORIZONTAL       0x0000
 #define LCD_DIR_VERTICAL         0x0001
 
-#define MAZE_RADIUS							 12
+#define HOLE_RADIUS							 12
 
 /****************************************************************************
  *                         Types declaration section                        *
@@ -273,6 +273,6 @@ void Maze_DrawHole(void) {
 
   /* Set color and draw the hole */
   LCD_SetTextColor(LCD_COLOR_GREEN);
-  LCD_DrawFullCircle(maze.hole.X, maze.hole.Y, MAZE_RADIUS);
+  LCD_DrawFullCircle(maze.hole.X, maze.hole.Y, HOLE_RADIUS);
 
 }
