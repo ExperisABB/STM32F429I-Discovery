@@ -23,6 +23,10 @@
 // Threshold speed
 #define THRESHOLD_SPEED 40.0f
 
+// Line orientation
+#define LCD_DIR_HORIZONTAL       0x0000
+#define LCD_DIR_VERTICAL         0x0001
+
 /****************************************************************************
  *                         Types declaration section                        *
  ****************************************************************************/
@@ -224,3 +228,33 @@ void Maze_DrawTheBall(unsigned int x, unsigned int y)
     _y = y;
     
 } // Maze_DrawTheBall
+
+
+/****************************************************************************
+ * @brief  Draws the ball, and clears the previous one
+ * @retval None
+ ****************************************************************************/
+
+void Maze_DrawInner(void)
+{
+    /* 1st example * /
+    // Draw line
+    LCD_DrawLine(X_MIDDLE, Y_MIDDLE, MAZE_SIZE/3, LCD_DIR_HORIZONTAL); */
+
+    /* 2nd example */
+    // Draw lines
+    LCD_DrawLine(X_MIDDLE, Y_MIDDLE-MAZE_SIZE/2, MAZE_SIZE, LCD_DIR_VERTICAL);
+    LCD_DrawLine(X_MIDDLE-MAZE_SIZE/2, Y_MIDDLE, MAZE_SIZE, LCD_DIR_HORIZONTAL);
+
+    // Make some holes
+    LCD_SetTextColor(LCD_COLOR_WHITE);
+    LCD_DrawLine(X_MIDDLE, Y_MIDDLE-MAZE_SIZE/5, 4*BALL_RADIUS, LCD_DIR_VERTICAL);
+    LCD_DrawLine(X_MIDDLE, Y_MIDDLE+MAZE_SIZE/4, 4*BALL_RADIUS, LCD_DIR_VERTICAL);
+    LCD_DrawLine(X_MIDDLE+MAZE_SIZE/3, Y_MIDDLE, 4*BALL_RADIUS, LCD_DIR_HORIZONTAL);
+    LCD_SetTextColor(LCD_COLOR_BLACK);
+    
+    
+    // Place the ball
+    ball.x_position = X_MIDDLE - MAZE_SIZE/4;
+    ball.y_position = Y_MIDDLE - MAZE_SIZE/4;
+}

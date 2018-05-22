@@ -118,6 +118,9 @@ int main(void)
   /* Experis: draw maze outer border */
 	Maze_DrawBorder();
 
+	/* Draw the inner maze */
+	Maze_DrawInner();
+
   /* Infinite loop */
   while (1)
   {

@@ -91,4 +91,7 @@ void Maze_DrawBoardOrientation(unsigned int orientation, unsigned int oldOrienta
 // Draws the ball, and clears the previous one
 void Maze_DrawTheBall(unsigned int x, unsigned int y);
 
+// Draw the inner maze 
+void Maze_DrawInner(void);
+
 #endif      // include me once
