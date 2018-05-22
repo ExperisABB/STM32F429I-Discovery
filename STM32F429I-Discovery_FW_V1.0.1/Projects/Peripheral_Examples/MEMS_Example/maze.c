@@ -27,6 +27,8 @@
 #define LCD_DIR_HORIZONTAL       0x0000
 #define LCD_DIR_VERTICAL         0x0001
 
+#define MAZE_RADIUS							 12
+
 /****************************************************************************
  *                         Types declaration section                        *
  ****************************************************************************/
@@ -253,8 +255,24 @@ void Maze_DrawInner(void)
     LCD_DrawLine(X_MIDDLE+MAZE_SIZE/3, Y_MIDDLE, 4*BALL_RADIUS, LCD_DIR_HORIZONTAL);
     LCD_SetTextColor(LCD_COLOR_BLACK);
     
-    
     // Place the ball
     ball.x_position = X_MIDDLE - MAZE_SIZE/4;
     ball.y_position = Y_MIDDLE - MAZE_SIZE/4;
+	
+	  // Place the hole
+		maze.hole.X =  X_MIDDLE - MAZE_SIZE/3;
+		maze.hole.Y =  Y_MIDDLE + MAZE_SIZE*3/8;
+}
+
+/****************************************************************************
+ * @brief  Draw the inner hole
+ * @retval None
+ ****************************************************************************/
+
+void Maze_DrawHole(void) {
+
+  /* Set color and draw the hole */
+  LCD_SetTextColor(LCD_COLOR_GREEN);
+  LCD_DrawFullCircle(maze.hole.X, maze.hole.Y, MAZE_RADIUS);
+
 }

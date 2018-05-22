@@ -170,6 +170,9 @@ static void Demo_MEMS(void)
 	/* Manage walls & barriers */
 	Ball_checkProxymity();
 
+	/* Draws the hole */
+	Maze_DrawHole();
+	
 	/* Draws the ball, and clears the previous one */
 	Maze_DrawTheBall(ball.x_position, ball.y_position );
 	

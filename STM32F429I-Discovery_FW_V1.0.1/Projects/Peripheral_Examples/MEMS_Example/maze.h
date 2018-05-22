@@ -50,6 +50,8 @@
 #define LCD_COLOR_BLACK 0x0000
 #define LCD_COLOR_RED   0xF800
 #define LCD_COLOR_BLUE2 0x051F
+#define LCD_COLOR_GREY  0xF7DE
+#define LCD_COLOR_GREEN 0x07E0
 
 /****************************************************************************
  *                              Global Constants                            *
@@ -63,8 +65,17 @@ typedef enum { eNONE = 0, eUP, eDOWN, eRIGHT, eLEFT } eOrientation;
 
 typedef struct {
 
+		float X;							// X coordinate
+	  float Y;							// Y coordinate
+	
+} ExperisPoint;
+
+typedef struct {
+
 	eOrientation orientation; 		// board orientation
 	eOrientation oldOrientation; 	// board orientation (previous value)
+	
+	ExperisPoint hole;	   				// Hole position
 	
 } Maze;
 
@@ -93,5 +104,8 @@ void Maze_DrawTheBall(unsigned int x, unsigned int y);
 
 // Draw the inner maze 
 void Maze_DrawInner(void);
+
+// Draw the inner hole
+void Maze_DrawHole(void);
 
 #endif      // include me once
