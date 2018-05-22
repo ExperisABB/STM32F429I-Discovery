@@ -23,7 +23,7 @@
 
 // Acceleration
 #define G_accel    60.0f    // Acceleration due to gravity [pixel/s^2]
-#define F_decel    15.0f    // Deceleration due to friction [pixel/s^2]
+#define F_decel    10.0f    // Deceleration due to friction [pixel/s^2]
 
 #define BALL_RADIUS   6			// [pixels]
 
