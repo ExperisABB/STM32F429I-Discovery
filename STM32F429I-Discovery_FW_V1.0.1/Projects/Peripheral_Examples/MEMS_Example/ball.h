@@ -26,6 +26,7 @@
 #define F_decel    10.0f    // Deceleration due to friction [pixel/s^2]
 
 #define BALL_RADIUS   6			// [pixels]
+#define HOLE_RADIUS	 12
 
 /****************************************************************************
  *                               Global Typedef                             *
@@ -45,6 +46,9 @@ typedef struct {
     float x_position;
     float y_position;
     
+    // Distance from the hole
+    float distance;
+    
 } Ball;
 
 /****************************************************************************
@@ -63,5 +67,8 @@ void Ball_Adjust_aVS(unsigned int orientation);
     
 // Check if the ball is close to a wall, in both directions
 void Ball_checkProxymity(void);
+
+// Manage the hole sink 
+void Ball_checkHole(void);
 
 #endif      // include me once

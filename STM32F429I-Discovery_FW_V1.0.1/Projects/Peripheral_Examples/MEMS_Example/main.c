@@ -167,6 +167,9 @@ static void Demo_MEMS(void)
 	/* Adjust ball acceleration, speed and position */ 
 	Ball_Adjust_aVS(maze.orientation);
 	
+    /* Manage the hole sink */
+    Ball_checkHole();
+    
 	/* Manage walls & barriers */
 	Ball_checkProxymity();
 

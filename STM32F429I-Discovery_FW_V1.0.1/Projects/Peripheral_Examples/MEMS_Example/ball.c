@@ -13,6 +13,7 @@
 
 #include "ball.h"
 #include "maze.h"
+#include "math.h"
 
 /****************************************************************************
  *                            Local define section                          *
@@ -302,3 +303,36 @@ void Ball_checkProxymity(void)
 }
 
 #endif // NEW_PROXY_METHOD
+
+
+/****************************************************************************
+ * @brief  Manage the hole sink 
+ ****************************************************************************/
+
+void Ball_checkHole(void) {
+    
+    // Calculate catetis
+    float catetoX = ball.x_position - maze.hole.X;
+    float catetoY = ball.y_position - maze.hole.Y;
+    
+    // Calculate the distance from the hole
+    ball.distance = sqrt(catetoX * catetoX + catetoY * catetoY);
+    
+    // Check if the ball is inside the hole
+    if (ball.distance <= (float)(HOLE_RADIUS-1))
+    {
+        // Set position to hole center
+        ball.x_position = maze.hole.X;
+        ball.y_position = maze.hole.Y;
+        
+        // Clear speed
+        ball.x_speed = 0.0f;
+        ball.y_speed = 0.0f;
+    }
+
+    
+    
+    
+}
+
+
