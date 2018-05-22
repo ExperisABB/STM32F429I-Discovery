@@ -61,4 +61,7 @@ extern Ball ball;
 // Adjust Ball acceleration, speed and position
 void Ball_Adjust_aVS(unsigned int orientation);
     
+// Check if the ball is close to a wall, in both directions
+void Ball_checkProxymity(void);
+
 #endif      // include me once

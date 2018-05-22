@@ -163,6 +163,9 @@ static void Demo_MEMS(void)
 
 	/* Adjust ball acceleration, speed and position */ 
 	Ball_Adjust_aVS(maze.orientation);
+	
+	/* Manage walls & barriers */
+	Ball_checkProxymity();
 
 	/* Draws the ball, and clears the previous one */
 	Maze_DrawTheBall(ball.x_position, ball.y_position );
